@@ -1,0 +1,181 @@
+<html>
+<head>
+    <title>JS Lib</title>
+    <link href="bootstrap.css" rel="stylesheet" type="text/css"/>
+    <script src="speedy.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Toggle</h2>
+        <div class="row">
+            <div class="col-md-2">
+                <p>
+                    <span id="span1">
+                        This is sample Text
+                    </span>
+                    <br/>
+                    <button onclick="_.hide('#span1');">Hide</button>
+                </p>
+            </div>
+            <div class="col-md-2">
+                <p>
+                    <span id="span2" style="display: none;">
+                        This is sample Text
+                    </span>
+                    <br/>
+                    <button onclick="_.show('#span2');">Show</button>
+                </p>
+            </div>
+            <div class="col-md-2">
+                <p>
+                    <span id="span3" style="display: none;">
+                        This is sample Text
+                    </span>
+                    <br/>
+                    <button onclick="_.toggle('#span3');">Toggle</button>
+                </p>
+            </div>
+            <div class="col-md-2">
+                <p>
+                    <span id="span4" style="display: none;">
+                        This is sample Text
+                    </span>
+                    <br/>
+                    <button onclick="_.fadeIn('#span4');">Fade In</button>
+                </p>
+            </div>
+            <div class="col-md-2">
+                <p>
+                    <span id="span5">
+                        This is sample Text
+                    </span>
+                    <br/>
+                    <button onclick="_.fadeOut('#span5');">Fade Out</button>
+                </p>
+            </div>
+            <div class="col-md-2">
+                <p>
+                    <span id="span6">
+                        This is sample Text
+                    </span>
+                    <br/>
+                    <button onclick="_.toggleFade('#span6');">Toggle Fade</button>
+                </p>
+            </div>
+        </div>
+        <hr/>
+    </div>
+    <div class="container">
+        <h2>Events</h2>
+        <div class="row">
+            <div class="col-md-2">
+                <p>
+                    <span id="span7" onclick="this.style.backgroundColor = '#'+((1<<24)*Math.random()|0).toString(16);">
+                        This is sample text
+                    </span>
+                    <button onClick="_.click('#span7');">Click on Text</button>
+                </p>
+            </div>
+            <div class="col-md-2">
+                <p>
+                    <span id="span8" ondblclick="this.style.backgroundColor = '#'+((1<<24)*Math.random()|0).toString(16);">
+                        This is sample text
+                    </span>
+                    <button onclick="_.dblClick('#span8');">DoubleClick on Text</button>
+                </p>
+            </div>
+            <div class="col-md-2">
+                <p>
+                    <input type="text" id="input1" value="Blur Happened" onBlur="this.value = 'Blur Happened'" onfocus="this.value=''"/>
+                    <button onlclick="_.blur('#input1');">Blur Event</button>
+                </p>
+            </div>
+            <div class="col-md-2">
+                <p>
+                    <input type="text" id="input2" onBlur="this.value = ''" onfocus="this.value='Now Focused'"/>
+                    <button onclick="_.focus('#input2');">Focus Event</button>
+                </p>
+            </div>
+            <div class="col-md-2">
+                <form id="form1">
+                    <input name="name" type="text" placeholder="Name"/>
+                </form>
+                <button onclick="_.submit('#form1');">Submit Form</button>
+            </div>
+            <div class="col-md-2">
+                <form id="form2">
+                    <input name="name" type="text" placeholder="Name"/>
+                </form>
+                <button onclick="_.reset('#form2');">Reset Form</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <p>
+                    <select id="select1" onchange="this.value = '0';">
+                    <option id="Fire">Fire</option>
+                    <option id="Water">Water</option>
+                    <option id="Ice">Ice</option>
+                    </select>
+                    <button onclick="_.change('#select1');">Fire Change</button>
+                </p>
+            </div>
+        </div>
+        <hr/>
+    </div>
+
+
+
+    <div class="container">
+        <h2>Event Listeners</h2>
+        <div class="row">
+            <div class="col-md-2">
+                <p>
+                    <span id="span9">
+                        Click on me to Check Event
+                    </span>
+                    <br/>
+                    <button onclick="_.element('#span9').listen('click', function(){alert('Click happened !');}, true);">Attach Click Listener</button>
+                    <button onclick="_.element('#span9').removeListener('click');">Remove Click Listener</button>
+                </p>
+            </div>
+            <div class="col-md-2">
+                <p>
+                    <div id="dynamicHolder1">
+                    </div>
+                    <br/>
+                    <button onClick="_.html('#dynamicHolder1', '<span id=\'span10\'>This is a dynamic Element, Click me</span>');">Add Dynamic HTML</button>
+                    <button onclick="_.element('#dynamicHolder1').listenDynamic('click', '#span10', function(){alert('Click on dynamic happened !');}, true);">Add Dynamic Click Listener</button>
+                </p>
+            </div>
+        </div>
+        <hr/>
+    </div>
+    <div class="container">
+        <h2>DOM Manipulators</h2>
+        <div class="row">
+            <div class="col-md-2">
+                <span id="span11">
+                </span>
+                <button onClick="_.html('#span11','<b>I am</b> the new HTML');">Add HTML</button>
+            </div>
+            <div class="col-md-2">
+                <span id="span12">
+                    <strong>My name is</strong> Jane Doe
+                </span>
+                <textarea id="textarea1" readonly="readonly">
+                </textarea>
+                <button onClick="_.value('#textarea1',_.html('#span12'));">Read HTML</button>
+            </div>
+            <div class="col-md-2">
+                <span id="span13">
+                    <strong>My name is</strong> Jane Doe
+                </span>
+                <textarea id="textarea2" readonly="readonly">
+                </textarea>
+                <button onClick="_.value('#textarea2',_.text('#span13'));">Read Text</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
