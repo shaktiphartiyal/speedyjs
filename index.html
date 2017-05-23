@@ -175,6 +175,16 @@
                 </textarea>
                 <button onClick="_.value('#textarea2',_.text('#span13'));">Read Text</button>
             </div>
+            <div class="col-md-2">
+                <input type="text" id="input5" value="69"/>
+                The Value is : <span id="span14"></span>
+                <button onClick="_.html('#span14',_.value('#input5'));">Get Value</button>
+            </div>
+            <div class="col-md-2">
+                <input type="text" id="input6" value="89"/>
+                <button onClick="_.value('#input7',_.value('#input6'));">Set Value -&gt;</button>
+                <input type="text" id="input7" value="This value will be updated"/>
+            </div>
         </div>
     </div>
 </body>
