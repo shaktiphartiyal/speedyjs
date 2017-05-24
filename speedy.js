@@ -579,7 +579,6 @@
                 this._consoleErr(e);
             }
         }
-
         windowLoaded(fn)
         {
             if(typeof(fn) != "function")
