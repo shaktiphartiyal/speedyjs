@@ -582,20 +582,27 @@
 
         windowLoaded(fn)
         {
-            window.onload = function() {
-                init();
-                doSomethingElse();
-            };
+            if(typeof(fn) != "function")
+            {
+                this._consoleErr("Expected Parameter should be of type function !")
+                return;
+            }
+            window.onload = fn();
         }
-        domLoaded()
+        domLoaded(fn)
         {
-            if (
-                document.readyState === "complete" ||
-                (document.readyState !== "loading" && !document.documentElement.doScroll)
-            ) {
-                callback();
-            } else {
-                document.addEventListener("DOMContentLoaded", callback);
+            if(typeof(fn) != "function")
+            {
+                this._consoleErr("Expected Parameter should be of type function !")
+                return;
+            }
+            if(document.readyState === "complete" || (document.readyState !== "loading" && !document.documentElement.doScroll))
+            {
+                fn();
+            }
+            else
+            {
+                document.addEventListener("DOMContentLoaded", fn);
             }
         }
     }
