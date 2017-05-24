@@ -615,9 +615,58 @@
         {
             return navigator.onLine;
         }
-        ajax()
+        xhr(parameters)
         {
-
+            /**
+             * method = GET/POST/PUT/PATCH
+             * url
+             * expect = text/json/arraybuffer
+             * complete = function
+             * success = function
+             * fail = function
+             * timeout = ms
+             */
+            let xhr = new XMLHttpRequest();
+            let async = true;
+            let timeout = parameters.hasOwnProperty("timeout")?parameters.timeout:0;
+            if(parameters.hasOwnProperty("async") && parameters.async === false)
+            {
+                async = false;
+            }
+            xhr.onload = function (e) {
+                if (xhr.readyState === 4)
+                {
+                    if(parameters.hasOwnProperty("complete"))
+                    {
+                        parameters.complete(xhr);
+                    }
+                    if (xhr.status === 200)
+                    {
+                        if(parameters.hasOwnProperty("success"))
+                        {
+                            parameters.success(xhr.responseText);
+                        }
+                    }
+                    else
+                    {
+                        if(parameters.hasOwnProperty("fail"))
+                        {
+                            parameters.fail(xhr.status, xhr.statusText, xhr);
+                        }
+                    }
+                }
+            };
+            xhr.open(parameters.method, parameters.url, async);
+            if(async === true)
+            {
+                xhr.timeout = timeout;
+            }
+            xhr.send();
+        }
+        hitAPI(url)
+        {
+            let img = new Image();
+            img.src = url;
         }
     }
     class SpeedyToggle extends SpeedyCommunicate

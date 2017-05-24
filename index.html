@@ -213,6 +213,14 @@
             </div>
         </div>
     </div>
+<div class="container">
+    <h2>Communication</h2>
+    <div class="row">
+        <div class="col-md-2">
+            <button onClick="makeAjaxCall();">Make AJAX Call</button>
+        </div>
+    </div>
+</div>
 </body>
 <script type="text/javascript">
     _.domLoaded(function () {
@@ -221,5 +229,28 @@
     _.windowLoaded(function(){
         console.log("Window Loaded");
     });
+
+
+    function makeAjaxCall() {
+        _.xhr({
+            method : "GET",
+            url : "sample.php",
+            expect : "RAJ",
+            timeout : 3000,
+            async : false,
+            complete : function(request){
+                console.log("Complete");
+                console.log(request);
+            },
+            success : function (e) {
+                console.log("Success");
+                console.log(e);
+            },
+            fail : function(code, status, request){
+                console.log("Fail");
+                console.log(code + " - " + status);
+            },
+        });
+    }
 </script>
 </html>
