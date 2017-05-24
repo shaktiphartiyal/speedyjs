@@ -258,7 +258,38 @@
         {
 
         }
+        each()
+        {
 
+        }
+        equate()
+        {
+
+        }
+        filter()
+        {
+
+        }
+        first()
+        {
+
+        }
+        last()
+        {
+
+        }
+        has()
+        {
+
+        }
+        not()
+        {
+
+        }
+        is()
+        {
+
+        }
     }
     class SpeedyManipulate extends SpeedySelectors
     {
@@ -549,18 +580,23 @@
             }
         }
 
-
-
-        //help for below
-        //https://www.sitepoint.com/jquery-document-ready-plain-javascript/
-        //https://stackoverflow.com/questions/9899372/pure-javascript-equivalent-to-jquerys-ready-how-to-call-a-function-when-the
-        windowLoaded()
+        windowLoaded(fn)
         {
-
+            window.onload = function() {
+                init();
+                doSomethingElse();
+            };
         }
         domLoaded()
         {
-
+            if (
+                document.readyState === "complete" ||
+                (document.readyState !== "loading" && !document.documentElement.doScroll)
+            ) {
+                callback();
+            } else {
+                document.addEventListener("DOMContentLoaded", callback);
+            }
         }
     }
     class Validate extends Listeners
@@ -569,9 +605,13 @@
     }
     class SpeedyCommunicate extends Validate
     {
-        get onLine()
+        get isOnLine()
         {
             return navigator.onLine;
+        }
+        ajax()
+        {
+
         }
     }
     class SpeedyToggle extends SpeedyCommunicate
