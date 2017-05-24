@@ -51,7 +51,8 @@
         {
             console.info(msg);
         }
-        _isElement(obj) {
+        _isElement(obj)
+        {
             try
             {
                 return obj instanceof HTMLElement;
@@ -317,25 +318,40 @@
                 }
             }
         }
-        remove()
+        remove(selector)
         {
-
+            for(let node of this._elements(selector))
+            {
+                node.parentNode.removeChild(node);
+            }
         }
-        append()
+        append(selector, data)
         {
-
+            for(let node of this._elements(selector))
+            {
+                node.insertAdjacentHTML('beforeend', data);
+            }
         }
-        prepend()
+        prepend(selector, data)
         {
-
+            for(let node of this._elements(selector))
+            {
+                node.insertAdjacentHTML('afterbegin', data);
+            }
         }
-        before()
+        before(selector, data)
         {
-
+            for(let node of this._elements(selector))
+            {
+                node.insertAdjacentHTML('beforebegin', data);
+            }
         }
-        after()
+        after(selector, data)
         {
-
+            for(let node of this._elements(selector))
+            {
+                node.insertAdjacentHTML('afterend', data);
+            }
         }
     }
     class SpeedyProperties extends SpeedyManipulate

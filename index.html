@@ -185,6 +185,32 @@
                 <button onClick="_.value('#input7',_.value('#input6'));">Set Value -&gt;</button>
                 <input type="text" id="input7" value="This value will be updated"/>
             </div>
+            <div class="col-md-2">
+                <span id="span15">This will be removed</span>
+                <button onClick="_.remove('#span15');">Remove</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <textarea id="textarea3" placeholder="Enter data to append"></textarea>
+                <span style="background-color: #dedede;" id="span16">Data will be appended in span.</span><br/>
+                <button onClick="_.append('#span16',_.value('#textarea3'));">Append</button>
+            </div>
+            <div class="col-md-2">
+                <textarea id="textarea4" placeholder="Enter data to prepend"></textarea>
+                <span style="background-color: #dedede;" id="span17">Data will be prepended in span.</span><br/>
+                <button onClick="_.prepend('#span17',_.value('#textarea4'));">Prepend</button>
+            </div>
+            <div class="col-md-2">
+                <textarea id="textarea5" placeholder="Enter data to inset before"></textarea>
+                <span style="background-color: #dedede;" id="span18">Data will be added before span.</span><br/>
+                <button onClick="_.before('#span18',_.value('#textarea5'));">Before</button>
+            </div>
+            <div class="col-md-2">
+                <textarea id="textarea6" placeholder="Enter data to inset after"></textarea>
+                <span style="background-color: #dedede;" id="span19">Data will be added after span.</span><br/>
+                <button onClick="_.after('#span19',_.value('#textarea6'));">After</button>
+            </div>
         </div>
     </div>
 </body>
