@@ -217,7 +217,16 @@
     <h2>Communication</h2>
     <div class="row">
         <div class="col-md-2">
+            <br/>
             <button onClick="makeAjaxCall();">Make AJAX Call</button>
+        </div>
+        <div class="col-md-2">
+            Online : <span id="span20"></span><br/>
+            <button onClick="_.html('#span20',_.isOnLine)">Check If Online</button>
+        </div>
+        <div class="col-md-2">
+            <span id="span21"></span><br/>
+            <button onClick="sendBeacon();">Set Beacon</button>
         </div>
     </div>
 </div>
@@ -230,27 +239,38 @@
         console.log("Window Loaded");
     });
 
-
     function makeAjaxCall() {
         _.xhr({
             method : "GET",
             url : "sample.php",
-            expect : "RAJ",
             timeout : 3000,
-            async : false,
-            complete : function(request){
-                console.log("Complete");
-                console.log(request);
+            async : true,
+            data : {
+                name : "Shakti",
+                age : 26,
+                gender : "male",
             },
-            success : function (e) {
-                console.log("Success");
-                console.log(e);
+            complete : function(request){
+                console.log("XHR completed");
+            },
+            success : function (response) {
+                console.log("XHR was a success");
+                console.info(response);
             },
             fail : function(code, status, request){
-                console.log("Fail");
-                console.log(code + " - " + status);
+                console.log("XHR Failed with code : "+code+" and Status : "+status);
+                console.log(request);
             },
         });
+    }
+    var beaconSet = false;
+    function sendBeacon()
+    {
+        if(!beaconSet)
+        {
+            _.sendBeacon('beaconReceiver.php', "sample_text");
+            _.html('#span21', "Beacon Set Successfully");
+        }
     }
 </script>
 </html>

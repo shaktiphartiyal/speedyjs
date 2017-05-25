@@ -227,6 +227,16 @@
                 delete handlers[event]
             }
         }
+        _serialize(obj)
+        {
+            let str = [];
+            for(let p in obj)
+                if (obj.hasOwnProperty(p))
+                {
+                    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                }
+            return str.join("&");
+        }
     }
     class SpeedySelectors extends SpeedyHelpers
     {
@@ -620,15 +630,21 @@
             /**
              * method = GET/POST/PUT/PATCH
              * url
-             * expect = text/json/arraybuffer
              * complete = function
              * success = function
              * fail = function
              * timeout = ms
+             * data = object to be sent
              */
             let xhr = new XMLHttpRequest();
             let async = true;
             let timeout = parameters.hasOwnProperty("timeout")?parameters.timeout:0;
+            let data = "";
+            if(parameters.hasOwnProperty("data"))
+            {
+                data = parameters.data;
+                data = this._serialize(data);
+            }
             if(parameters.hasOwnProperty("async") && parameters.async === false)
             {
                 async = false;
@@ -644,7 +660,13 @@
                     {
                         if(parameters.hasOwnProperty("success"))
                         {
-                            parameters.success(xhr.responseText);
+                            let response = "";
+                            response = xhr.responseText;
+                            if(xhr.getResponseHeader("Content-Type") == "application/json")
+                            {
+                                response = JSON.parse(response);
+                            }
+                            parameters.success(response);
                         }
                     }
                     else
@@ -656,17 +678,29 @@
                     }
                 }
             };
+            if(parameters.hasOwnProperty("fail"))
+            {
+                xhr.addEventListener("error", function(e){
+                    parameters.fail(null, null, e);
+                });
+            }
             xhr.open(parameters.method, parameters.url, async);
             if(async === true)
             {
                 xhr.timeout = timeout;
             }
-            xhr.send();
+            xhr.send(data);
         }
         hitAPI(url)
         {
             let img = new Image();
             img.src = url;
+        }
+        sendBeacon(url, data)
+        {
+            window.addEventListener('unload', function () {
+                return navigator.sendBeacon(url, data);
+            }, false);
         }
     }
     class SpeedyToggle extends SpeedyCommunicate
