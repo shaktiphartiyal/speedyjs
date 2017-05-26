@@ -158,7 +158,7 @@
                     <div id="dynamicHolder1">
                     </div>
                     <button class="btn btn-primary btn-sm" onClick="_.html('#dynamicHolder1', '<span id=\'span10\'>This is a dynamic Element, Click me</span>');">Add Dynamic HTML</button>
-                    <button class="btn btn-primary btn-sm" onclick="_.element('#dynamicHolder1').listenDynamic('click', '#span10', function(){alert('Click on dynamic happened !');}, true);">Add Dynamic Click Listener</button>
+                    <button class="btn btn-primary btn-sm" onclick="_.element('#dynamicHolder1').listenDynamic('click', '#span10', function(){alert('Click on dynamic happened !');}, true);">Add Click Listener</button>
                 </div>
             </div>
         </div>
@@ -242,6 +242,20 @@
                     <textarea class="form-control" id="textarea6" placeholder="Enter data to inset after"></textarea>
                     <span style="background-color: #dedede;" id="span19">Data will be added after span.</span><br/>
                     <button class="btn btn-primary btn-sm" onClick="_.after('#span19',_.value('#textarea6'));">After</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <button class="btn btn-primary btn-sm btn-success" id="button2" >Button will be disabled</button>
+                    <br/>
+                    <button class="btn btn-primary btn-sm" onClick="_.disable('#button2');">Disable Button</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <button class="btn btn-primary btn-sm btn-success" id="button3" disabled="disabled">Button will be enabled</button>
+                    <br/>
+                    <button class="btn btn-primary btn-sm" onClick="_.enable('#button3');">Enable Button</button>
                 </div>
             </div>
         </div>
