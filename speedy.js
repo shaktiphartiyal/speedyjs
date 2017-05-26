@@ -10,7 +10,7 @@
             this.nodes = "";
             this.caller = "";
             this.speedyListenersKey = "__speedyeh__" + Math.floor(Math.random() * 100000);
-            window.SpeedyBase = this;
+            window.SpeedyActiveObject = this;
         }
         _elements(selector)
         {
@@ -665,6 +665,11 @@
             let timeout = parameters.hasOwnProperty("timeout")?parameters.timeout:0;
             let data = "";
             let url = document.location;
+            let method = "GET";
+            if(parameters.hasOwnProperty('method'))
+            {
+                method = parameters.method;
+            }
             if(parameters.hasOwnProperty("url"))
             {
                 url = parameters.url;
@@ -673,13 +678,32 @@
             {
                 url = this._addParamToUrl(url, 'spcb'+Math.random().toString(36).substring(7), Math.round(Math.random()*1000000));
             }
-            if(parameters.hasOwnProperty("data")) //@TODO add provision for form data
+            if(parameters.hasOwnProperty("data"))
             {
-/*                console.log(parameters.data);
-                console.log(typeof(parameters.data));
-                return;*/
                 data = parameters.data;
-                data = this._serialize(data);
+                if(data instanceof FormData === false)
+                {
+                    if(method === "GET")
+                    {
+                        for (let key in data)
+                        {
+                            url = SpeedyActiveObject._addParamToUrl(url, key, data[key]);
+                        }
+                    }
+                    else if(method === "POST")
+                    {
+                        let frmData = new FormData();
+                        for (let key in data)
+                        {
+                            frmData.append(key, data[key]);
+                        }
+                        data = frmData;
+                    }
+                    else
+                    {
+                        data = this._serialize(data);
+                    }
+                }
             }
             if(parameters.hasOwnProperty("async") && parameters.async === false)
             {
@@ -720,7 +744,7 @@
                     parameters.fail(null, null, e);
                 });
             }
-            xhr.open(parameters.method, url, async);
+            xhr.open(method, url, async);
             if(async === true)
             {
                 xhr.timeout = timeout;
@@ -737,7 +761,14 @@
             }
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('XHR-created-by', 'SpeedyJS');
-            xhr.send(data);
+            if(method === "GET")
+            {
+                xhr.send();
+            }
+            else
+            {
+                xhr.send(data);
+            }
         }
         hitAPI(url)
         {
@@ -800,5 +831,6 @@
     {
 
     }
+    window.SpeedyBase = SpeedyBase;
     window._  = new Speedy();
 })();

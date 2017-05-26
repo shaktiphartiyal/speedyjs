@@ -243,15 +243,10 @@
         console.log("Window Loaded");
     });
 
-    function makeAjaxCall() {
-
-/*        var formData = new FormData();
-        formData.append('username', 'sampleuser');
-        formData.append('password', '76JHKkjgbh');*/
-
-
+    function makeAjaxCall()
+    {
         _.xhr({
-            method : "GET",
+            method : "PUT",
             url : "sample.php",
             timeout : 3000,
             async : true,
@@ -260,7 +255,6 @@
                 age : 26,
                 gender : "male",
             },
-/*            data : formData,*/
             cacheBuster : true,
             headers : {
                 'X-CSRF-TOKEN' : "324ewi87tygyjhgrtfgtru8uijk"
