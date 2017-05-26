@@ -244,6 +244,12 @@
     });
 
     function makeAjaxCall() {
+
+/*        var formData = new FormData();
+        formData.append('username', 'sampleuser');
+        formData.append('password', '76JHKkjgbh');*/
+
+
         _.xhr({
             method : "GET",
             url : "sample.php",
@@ -254,6 +260,8 @@
                 age : 26,
                 gender : "male",
             },
+/*            data : formData,*/
+            cacheBuster : true,
             headers : {
                 'X-CSRF-TOKEN' : "324ewi87tygyjhgrtfgtru8uijk"
             },

@@ -237,6 +237,23 @@
                 }
             return str.join("&");
         }
+        _addParamToUrl(url, param, value)
+        {
+            let a = document.createElement('a'), regex = /(?:\?|&amp;|&)+([^=]+)(?:=([^&]*))*/g;
+            let match, str = [];
+            a.href = url;
+            param = encodeURIComponent(param);
+            while (match = regex.exec(a.search))
+            {
+                if (param != match[1])
+                {
+                    str.push(match[1]+(match[2]?"="+match[2]:""));
+                }
+            }
+            str.push(param+(value?"="+ encodeURIComponent(value):""));
+            a.search = str.join("&");
+            return a.href;
+        }
     }
     class SpeedySelectors extends SpeedyHelpers
     {
@@ -637,6 +654,7 @@
              * timeout = ms
              * data = object to be sent
              * headers = object
+             * cacheBuster = boolean
              */
             if(parameters.hasOwnProperty("beforeSend") && typeof(parameters.beforeSend) == "function")
             {
@@ -646,8 +664,20 @@
             let async = true;
             let timeout = parameters.hasOwnProperty("timeout")?parameters.timeout:0;
             let data = "";
-            if(parameters.hasOwnProperty("data"))
+            let url = document.location;
+            if(parameters.hasOwnProperty("url"))
             {
+                url = parameters.url;
+            }
+            if(parameters.hasOwnProperty("cacheBuster") && parameters.cacheBuster == true)
+            {
+                url = this._addParamToUrl(url, 'spcb'+Math.random().toString(36).substring(7), Math.round(Math.random()*1000000));
+            }
+            if(parameters.hasOwnProperty("data")) //@TODO add provision for form data
+            {
+/*                console.log(parameters.data);
+                console.log(typeof(parameters.data));
+                return;*/
                 data = parameters.data;
                 data = this._serialize(data);
             }
@@ -690,7 +720,7 @@
                     parameters.fail(null, null, e);
                 });
             }
-            xhr.open(parameters.method, parameters.url, async);
+            xhr.open(parameters.method, url, async);
             if(async === true)
             {
                 xhr.timeout = timeout;
