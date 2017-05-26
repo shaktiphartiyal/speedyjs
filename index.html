@@ -259,12 +259,20 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="card">
+                    <button class="btn btn-primary btn-sm" onClick="showLoading();">Show Loading</button>
+                </div>
+            </div>
+        </div>
     </div>
 <div class="container">
     <h2>Communication</h2>
     <div class="row">
         <div class="col-md-2">
             <div class="card">
+                <span id="span19a"></span><br/>
                 <button class="btn btn-primary btn-sm" onClick="makeAjaxCall();">Make AJAX Call</button>
             </div>
         </div>
@@ -326,7 +334,7 @@
             },
             success : function (response) {
                 console.log("XHR was a success");
-                console.info(response);
+                _.html('#span19a', response);
             },
             fail : function(code, status, request){
                 console.log("XHR Failed with code : "+code+" and Status : "+status);
@@ -357,6 +365,14 @@
     {
         _.html('#span23', data.body);
         _.enable('#button1');
+    }
+
+    function showLoading()
+    {
+        _.loading(true);
+        setTimeout(function () {
+            _.loading(false);
+        }, 2000);
     }
 </script>
 </html>
