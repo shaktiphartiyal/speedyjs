@@ -633,9 +633,15 @@
              * complete = function
              * success = function
              * fail = function
+             * beforeSend = function
              * timeout = ms
              * data = object to be sent
+             * headers = object
              */
+            if(parameters.hasOwnProperty("beforeSend") && typeof(parameters.beforeSend) == "function")
+            {
+                parameters.beforeSend();
+            }
             let xhr = new XMLHttpRequest();
             let async = true;
             let timeout = parameters.hasOwnProperty("timeout")?parameters.timeout:0;
@@ -689,6 +695,18 @@
             {
                 xhr.timeout = timeout;
             }
+            if(parameters.hasOwnProperty('headers'))
+            {
+                for(let hName in parameters.headers)
+                {
+                    if (parameters.headers.hasOwnProperty(hName))
+                    {
+                        xhr.setRequestHeader(hName, parameters.headers[hName]);
+                    }
+                }
+            }
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('XHR-created-by', 'SpeedyJS');
             xhr.send(data);
         }
         hitAPI(url)

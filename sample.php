@@ -7,5 +7,8 @@
 //echo json_encode(["name" => "Shakti", "gender" => "Male"]);
 
 
+/*echo '<pre>';
+print_r($_REQUEST);*/
+
 echo '<pre>';
-print_r($_REQUEST);
+print_r(getallheaders());

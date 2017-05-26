@@ -228,6 +228,10 @@
             <span id="span21"></span><br/>
             <button onClick="sendBeacon();">Set Beacon</button>
         </div>
+        <div class="col-md-2">
+            <span id="span22"></span><br/>
+            <button onClick="hitAPI();">Hit API</button>
+        </div>
     </div>
 </div>
 </body>
@@ -250,6 +254,12 @@
                 age : 26,
                 gender : "male",
             },
+            headers : {
+                'X-CSRF-TOKEN' : "324ewi87tygyjhgrtfgtru8uijk"
+            },
+            beforeSend:function(){
+                alert("ABOUT TO SEND XHR");
+            },
             complete : function(request){
                 console.log("XHR completed");
             },
@@ -271,6 +281,13 @@
             _.sendBeacon('beaconReceiver.php', "sample_text");
             _.html('#span21', "Beacon Set Successfully");
         }
+    }
+
+
+    function hitAPI()
+    {
+        _.hitAPI('api.php?param1=abc&param2=foo&param3=test&timestamp='+new Date());
+        _.html('#span22', "API Hit done !");
     }
 </script>
 </html>
