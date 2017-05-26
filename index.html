@@ -3,64 +3,75 @@
     <title>Speedy JS</title>
     <link href="bootstrap.css" rel="stylesheet" type="text/css"/>
     <script src="speedy.js" type="text/javascript"></script>
+    <style>
+        .card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-flow: column nowrap;
+            border: 1px solid #ddd;
+            padding: 5px;
+            min-height:200px;
+            max-height:300px;
+            overflow:auto;
+            margin-bottom: 10px;
+        }
+        .card * {
+            margin: 2px 0px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h2>Toggle</h2>
         <div class="row">
             <div class="col-md-2">
-                <p>
-                    <span id="span1">
-                        This is sample Text
-                    </span>
-                    <br/>
-                    <button onclick="_.hide('#span1');">Hide</button>
-                </p>
+                    <div class="card">
+                        <span id="span1">
+                            This is sample Text
+                        </span>
+                        <button class="btn btn-primary btn-sm" onclick="_.hide('#span1');">Hide</button>
+                    </div>
             </div>
             <div class="col-md-2">
-                <p>
+                <div class="card">
                     <span id="span2" style="display: none;">
                         This is sample Text
                     </span>
-                    <br/>
-                    <button onclick="_.show('#span2');">Show</button>
-                </p>
+                    <button class="btn btn-primary btn-sm" onclick="_.show('#span2');">Show</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <p>
+                <div class="card">
                     <span id="span3" style="display: none;">
                         This is sample Text
                     </span>
-                    <br/>
-                    <button onclick="_.toggle('#span3');">Toggle</button>
-                </p>
+                    <button class="btn btn-primary btn-sm" onclick="_.toggle('#span3');">Toggle</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <p>
+                <div class="card">
                     <span id="span4" style="display: none;">
                         This is sample Text
                     </span>
-                    <br/>
-                    <button onclick="_.fadeIn('#span4');">Fade In</button>
-                </p>
+                    <button class="btn btn-primary btn-sm" onclick="_.fadeIn('#span4');">Fade In</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <p>
+                <div class="card">
                     <span id="span5">
                         This is sample Text
                     </span>
-                    <br/>
-                    <button onclick="_.fadeOut('#span5');">Fade Out</button>
-                </p>
+                    <button class="btn btn-primary btn-sm" onclick="_.fadeOut('#span5');">Fade Out</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <p>
+                <div class="card">
                     <span id="span6">
                         This is sample Text
                     </span>
-                    <br/>
-                    <button onclick="_.toggleFade('#span6');">Toggle Fade</button>
-                </p>
+                    <button class="btn btn-primary btn-sm" onclick="_.toggleFade('#span6');">Toggle Fade</button>
+                </div>
             </div>
         </div>
         <hr/>
@@ -69,56 +80,60 @@
         <h2>Events</h2>
         <div class="row">
             <div class="col-md-2">
-                <p>
+                <div class="card">
                     <span id="span7" onclick="this.style.backgroundColor = '#'+((1<<24)*Math.random()|0).toString(16);">
                         This is sample text
                     </span>
-                    <button onClick="_.click('#span7');">Click on Text</button>
-                </p>
+                    <button class="btn btn-primary btn-sm" onClick="_.click('#span7');">Click on Text</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <p>
+                <div class="card">
                     <span id="span8" ondblclick="this.style.backgroundColor = '#'+((1<<24)*Math.random()|0).toString(16);">
                         This is sample text
                     </span>
-                    <button onclick="_.dblClick('#span8');">DoubleClick on Text</button>
-                </p>
+                    <button class="btn btn-primary btn-sm" onclick="_.dblClick('#span8');">DoubleClick on Text</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <p>
-                    <input type="text" id="input1" value="Blur Happened" onBlur="this.value = 'Blur Happened'" onfocus="this.value=''"/>
-                    <button onlclick="_.blur('#input1');">Blur Event</button>
-                </p>
+                <div class="card">
+                    <input class="form-control" type="text" id="input1" value="Blur Happened" onBlur="this.value = 'Blur Happened'" onfocus="this.value=''"/>
+                    <button class="btn btn-primary btn-sm" onlclick="_.blur('#input1');">Blur Event</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <p>
-                    <input type="text" id="input2" onBlur="this.value = ''" onfocus="this.value='Now Focused'"/>
-                    <button onclick="_.focus('#input2');">Focus Event</button>
-                </p>
+                <div class="card">
+                    <input class="form-control" type="text" id="input2" onBlur="this.value = ''" onfocus="this.value='Now Focused'"/>
+                    <button class="btn btn-primary btn-sm" onclick="_.focus('#input2');">Focus Event</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <form id="form1">
-                    <input name="name" type="text" placeholder="Name"/>
-                </form>
-                <button onclick="_.submit('#form1');">Submit Form</button>
+                <div class="card">
+                    <form id="form1">
+                        <input class="form-control" name="name" type="text" placeholder="Name"/>
+                    </form>
+                    <button class="btn btn-primary btn-sm" onclick="_.submit('#form1');">Submit Form</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <form id="form2">
-                    <input name="name" type="text" placeholder="Name"/>
-                </form>
-                <button onclick="_.reset('#form2');">Reset Form</button>
+                <div class="card">
+                    <form id="form2">
+                        <input class="form-control" name="name" type="text" placeholder="Name"/>
+                    </form>
+                    <button class="btn btn-primary btn-sm" onclick="_.reset('#form2');">Reset Form</button>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-2">
-                <p>
-                    <select id="select1" onchange="this.value = '0';">
+                <div class="card">
+                    <select class="form-control" id="select1" onchange="this.value = '0';">
                     <option id="Fire">Fire</option>
                     <option id="Water">Water</option>
                     <option id="Ice">Ice</option>
                     </select>
-                    <button onclick="_.change('#select1');">Fire Change</button>
-                </p>
+                    <button class="btn btn-primary btn-sm" onclick="_.change('#select1');">Fire Change</button>
+                </div>
             </div>
         </div>
         <hr/>
@@ -130,23 +145,21 @@
         <h2>Event Listeners</h2>
         <div class="row">
             <div class="col-md-2">
-                <p>
+                <div class="card">
                     <span id="span9">
                         Click on me to Check Event
                     </span>
-                    <br/>
-                    <button onclick="_.element('#span9').listen('click', function(){alert('Click happened !');}, true);">Attach Click Listener</button>
-                    <button onclick="_.element('#span9').removeListener('click');">Remove Click Listener</button>
-                </p>
+                    <button class="btn btn-primary btn-sm" onclick="_.element('#span9').listen('click', function(){alert('Click happened !');}, true);">Attach Click Listener</button>
+                    <button class="btn btn-primary btn-sm" onclick="_.element('#span9').removeListener('click');">Remove Click Listener</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <p>
+                <div class="card">
                     <div id="dynamicHolder1">
                     </div>
-                    <br/>
-                    <button onClick="_.html('#dynamicHolder1', '<span id=\'span10\'>This is a dynamic Element, Click me</span>');">Add Dynamic HTML</button>
-                    <button onclick="_.element('#dynamicHolder1').listenDynamic('click', '#span10', function(){alert('Click on dynamic happened !');}, true);">Add Dynamic Click Listener</button>
-                </p>
+                    <button class="btn btn-primary btn-sm" onClick="_.html('#dynamicHolder1', '<span id=\'span10\'>This is a dynamic Element, Click me</span>');">Add Dynamic HTML</button>
+                    <button class="btn btn-primary btn-sm" onclick="_.element('#dynamicHolder1').listenDynamic('click', '#span10', function(){alert('Click on dynamic happened !');}, true);">Add Dynamic Click Listener</button>
+                </div>
             </div>
         </div>
         <hr/>
@@ -155,61 +168,81 @@
         <h2>DOM Manipulators</h2>
         <div class="row">
             <div class="col-md-2">
-                <span id="span11">
-                </span>
-                <button onClick="_.html('#span11','<b>I am</b> the new HTML');">Add HTML</button>
+                <div class="card">
+                    <span id="span11">
+                    </span>
+                    <button class="btn btn-primary btn-sm" onClick="_.html('#span11','<b>I am</b> the new HTML');">Add HTML</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <span id="span12">
-                    <strong>My name is</strong> Jane Doe
-                </span>
-                <textarea id="textarea1" readonly="readonly">
-                </textarea>
-                <button onClick="_.value('#textarea1',_.html('#span12'));">Read HTML</button>
+                <div class="card">
+                    <span id="span12">
+                        <strong>My name is</strong> Jane Doe
+                    </span>
+                    <textarea class="form-control" id="textarea1" readonly="readonly">
+                    </textarea>
+                    <button class="btn btn-primary btn-sm" onClick="_.value('#textarea1',_.html('#span12'));">Read HTML</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <span id="span13">
-                    <strong>My name is</strong> Jane Doe
-                </span>
-                <textarea id="textarea2" readonly="readonly">
-                </textarea>
-                <button onClick="_.value('#textarea2',_.text('#span13'));">Read Text</button>
+                <div class="card">
+                    <span id="span13">
+                        <strong>My name is</strong> Jane Doe
+                    </span>
+                    <textarea class="form-control" cla id="textarea2" readonly="readonly">
+                    </textarea>
+                    <button class="btn btn-primary btn-sm" onClick="_.value('#textarea2',_.text('#span13'));">Read Text</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <input type="text" id="input5" value="69"/>
-                The Value is : <span id="span14"></span>
-                <button onClick="_.html('#span14',_.value('#input5'));">Get Value</button>
+                <div class="card">
+                    <input class="form-control" type="text" id="input5" value="69"/>
+                    The Value is : <span id="span14"></span>
+                    <button class="btn btn-primary btn-sm" onClick="_.html('#span14',_.value('#input5'));">Get Value</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <input type="text" id="input6" value="89"/>
-                <button onClick="_.value('#input7',_.value('#input6'));">Set Value -&gt;</button>
-                <input type="text" id="input7" value="This value will be updated"/>
+                <div class="card">
+                    <input class="form-control" type="text" id="input6" value="89"/>
+                    <button class="btn btn-primary btn-sm" onClick="_.value('#input7',_.value('#input6'));">Set Value -&gt;</button>
+                    <input class="form-control" type="text" id="input7" value="This value will be updated"/>
+                </div>
             </div>
             <div class="col-md-2">
-                <span id="span15">This will be removed</span>
-                <button onClick="_.remove('#span15');">Remove</button>
+                <div class="card">
+                    <span id="span15">This will be removed</span>
+                    <button class="btn btn-primary btn-sm" onClick="_.remove('#span15');">Remove</button>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-2">
-                <textarea id="textarea3" placeholder="Enter data to append"></textarea>
-                <span style="background-color: #dedede;" id="span16">Data will be appended in span.</span><br/>
-                <button onClick="_.append('#span16',_.value('#textarea3'));">Append</button>
+                <div class="card">
+                    <textarea class="form-control" id="textarea3" placeholder="Enter data to append"></textarea>
+                    <span style="background-color: #dedede;" id="span16">Data will be appended in span.</span><br/>
+                    <button class="btn btn-primary btn-sm" onClick="_.append('#span16',_.value('#textarea3'));">Append</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <textarea id="textarea4" placeholder="Enter data to prepend"></textarea>
-                <span style="background-color: #dedede;" id="span17">Data will be prepended in span.</span><br/>
-                <button onClick="_.prepend('#span17',_.value('#textarea4'));">Prepend</button>
+                <div class="card">
+                    <textarea class="form-control" id="textarea4" placeholder="Enter data to prepend"></textarea>
+                    <span style="background-color: #dedede;" id="span17">Data will be prepended in span.</span><br/>
+                    <button class="btn btn-primary btn-sm" onClick="_.prepend('#span17',_.value('#textarea4'));">Prepend</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <textarea id="textarea5" placeholder="Enter data to inset before"></textarea>
-                <span style="background-color: #dedede;" id="span18">Data will be added before span.</span><br/>
-                <button onClick="_.before('#span18',_.value('#textarea5'));">Before</button>
+                <div class="card">
+                    <textarea class="form-control" id="textarea5" placeholder="Enter data to inset before"></textarea>
+                    <span style="background-color: #dedede;" id="span18">Data will be added before span.</span><br/>
+                    <button class="btn btn-primary btn-sm" onClick="_.before('#span18',_.value('#textarea5'));">Before</button>
+                </div>
             </div>
             <div class="col-md-2">
-                <textarea id="textarea6" placeholder="Enter data to inset after"></textarea>
-                <span style="background-color: #dedede;" id="span19">Data will be added after span.</span><br/>
-                <button onClick="_.after('#span19',_.value('#textarea6'));">After</button>
+                <div class="card">
+                    <textarea class="form-control" id="textarea6" placeholder="Enter data to inset after"></textarea>
+                    <span style="background-color: #dedede;" id="span19">Data will be added after span.</span><br/>
+                    <button class="btn btn-primary btn-sm" onClick="_.after('#span19',_.value('#textarea6'));">After</button>
+                </div>
             </div>
         </div>
     </div>
@@ -217,20 +250,33 @@
     <h2>Communication</h2>
     <div class="row">
         <div class="col-md-2">
-            <br/>
-            <button onClick="makeAjaxCall();">Make AJAX Call</button>
+            <div class="card">
+                <button class="btn btn-primary btn-sm" onClick="makeAjaxCall();">Make AJAX Call</button>
+            </div>
         </div>
         <div class="col-md-2">
-            Online : <span id="span20"></span><br/>
-            <button onClick="_.html('#span20',_.isOnLine)">Check If Online</button>
+            <div class="card">
+                Online : <span id="span20"></span><br/>
+                <button class="btn btn-primary btn-sm" onClick="_.html('#span20',_.isOnLine)">Check If Online</button>
+            </div>
         </div>
         <div class="col-md-2">
-            <span id="span21"></span><br/>
-            <button onClick="sendBeacon();">Set Beacon</button>
+            <div class="card">
+                <span id="span21"></span><br/>
+                <button class="btn btn-primary btn-sm" onClick="sendBeacon();">Set Beacon</button>
+            </div>
         </div>
         <div class="col-md-2">
-            <span id="span22"></span><br/>
-            <button onClick="hitAPI();">Hit API</button>
+            <div class="card">
+                <span id="span22"></span><br/>
+                <button class="btn btn-primary btn-sm" onClick="hitAPI();">Hit API</button>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="card">
+                <span id="span23"></span><br/>
+                <button class="btn btn-primary btn-sm" onClick="getJSONP();" id="button1">Get JSONP</button>
+            </div>
         </div>
     </div>
 </div>
@@ -242,7 +288,6 @@
     _.windowLoaded(function(){
         console.log("Window Loaded");
     });
-
     function makeAjaxCall()
     {
         _.xhr({
@@ -284,12 +329,20 @@
             _.html('#span21', "Beacon Set Successfully");
         }
     }
-
-
     function hitAPI()
     {
         _.hitAPI('api.php?param1=abc&param2=foo&param3=test&timestamp='+new Date());
         _.html('#span22', "API Hit done !");
+    }
+    function getJSONP()
+    {
+        _.disable('#button1');
+        _.getJSONP('https://jsonplaceholder.typicode.com/posts/4',jsonp_callback);
+    }
+    function jsonp_callback(data)
+    {
+        _.html('#span23', data.body);
+        _.enable('#button1');
     }
 </script>
 </html>
