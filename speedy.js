@@ -280,9 +280,12 @@
     }
     class SpeedySelectors extends SpeedyHelpers
     {
-        child()
+        child(selector)
         {
+            for(let node of _.elements(selector))
+            {
 
+            }
         }
         parent()
         {

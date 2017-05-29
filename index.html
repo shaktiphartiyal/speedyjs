@@ -301,6 +301,20 @@
             </div>
         </div>
     </div>
+    <div class="container">
+        <h2>Selectors</h2>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="card">
+                    <span id="span24">This is the span and <span id="span25">this is the child</span>.</span>
+                    <br/>
+                    The child is: <span id="span26"></span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="getChild();">Show Child</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 <script type="text/javascript">
@@ -373,6 +387,11 @@
         setTimeout(function () {
             _.loading(false);
         }, 2000);
+    }
+
+    function getChild()
+    {
+
     }
 </script>
 </html>
