@@ -265,6 +265,11 @@
                     <button class="btn btn-primary btn-sm" onClick="showLoading();">Show Loading</button>
                 </div>
             </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <button class="btn btn-primary btn-sm" onClick="_.css(this,{'background-color': '#'+((1<<24)*Math.random()|0).toString(16)});">Apply CSS</button>
+                </div>
+            </div>
         </div>
     </div>
 <div class="container">
@@ -306,11 +311,18 @@
         <div class="row">
             <div class="col-md-2">
                 <div class="card">
-                    <span id="span24">This is the span and <span id="span25">this is the child</span>.</span>
+                    <span id="span24">This is the span and <span id="span25">this is the child</span>. <span id="span25a">this is the 2nd child</span></span>
                     <br/>
                     The child is: <span id="span26"></span>
                     <br/>
                     <button class="btn-primary btn-sm btn" onClick="getChild();">Show Child</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span id="span27">This is the span and <span id="span28">this is the child</span>. <span id="span29">this is the 2nd child</span></span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="highlightChildren();">Highlight Children</button>
                 </div>
             </div>
         </div>
@@ -391,7 +403,14 @@
 
     function getChild()
     {
-
+        _.html('#span26',_.text(_.child('#span24')));
+    }
+    function highlightChildren()
+    {
+        for(let child of _.children('#span27'))
+        {
+            _.css(child, {"background-color" : "#8eacf1"});
+        }
     }
 </script>
 </html>

@@ -282,10 +282,23 @@
     {
         child(selector)
         {
-            for(let node of _.elements(selector))
+            for(let node of this._elements(selector))
             {
-
+                let c = node.children;
+                if(c.length > 0)
+                {
+                    return c[0];
+                }
             }
+        }
+        children(selector)
+        {
+            let children = [];
+            for(let node of this._elements(selector))
+            {
+                children = node.children;
+            }
+            return children;
         }
         parent()
         {
@@ -490,6 +503,16 @@
             else
             {
                 _.remove('#xFulLoading');
+            }
+        }
+        css(selector, styleObj)
+        {
+            for(let node of this._elements(selector))
+            {
+                for(let prop in styleObj)
+                {
+                    node.style[prop] = styleObj[prop];
+                }
             }
         }
     }
