@@ -26,19 +26,6 @@
             }
             return document.querySelectorAll(selector);
         }
-        _element(selector)
-        {
-            this.node = "";
-            this.caller = "";
-            this.nodes = "";
-            if(selector instanceof HTMLElement)
-            {
-                let selected = [];
-                selected.push(selector);
-                return selected;
-            }
-            return document.querySelector(selector);
-        }
         elements(selector)
         {
             this.node = "";
@@ -293,6 +280,11 @@
     }
     class SpeedySelectors extends SpeedyHelpers
     {
+        /**
+         * @function Selects the child element next to the selector
+         * @param selector
+         * @returns HTMLElement
+         */
         child(selector)
         {
             for(let node of this._elements(selector))
@@ -399,6 +391,48 @@
     }
     class SpeedyManipulate extends SpeedySelectors
     {
+        show()
+        {
+            for(let node of this._elements(arguments[0]))
+            {
+                this._doShow(node);
+            }
+        }
+        hide()
+        {
+            for(let node of this._elements(arguments[0]))
+            {
+                this._doHide(node);
+            }
+        }
+        toggle()
+        {
+            for(let node of this._elements(arguments[0]))
+            {
+                this._doToggle(node);
+            }
+        }
+        fadeIn()
+        {
+            for(let node of this._elements(arguments[0]))
+            {
+                this._doFadeIn(node);
+            }
+        }
+        fadeOut()
+        {
+            for(let node of this._elements(arguments[0]))
+            {
+                this._doFadeOut(node);
+            }
+        }
+        toggleFade()
+        {
+            for(let node of this._elements(arguments[0]))
+            {
+                this._doFadeToggle(node);
+            }
+        }
         html()
         {
             if(arguments.length == 1)
@@ -588,9 +622,6 @@
             let element = this._elements(selector)[0];
             return element.className && new RegExp("(^|\\s)" + className + "(\\s|$)").test(element.className);
         }
-    }
-    class SpeedyProperties extends SpeedyManipulate
-    {
         attr(selector, attribute, value)
         {
             let elements = this._elements(selector);
@@ -642,7 +673,7 @@
             }
         }
     }
-    class SpeedyEvents extends SpeedyProperties
+    class SpeedyEvents extends SpeedyManipulate
     {
         click()
         {
@@ -693,9 +724,6 @@
                 this._doChange(node);
             }
         }
-    }
-    class Listeners extends SpeedyEvents
-    {
         listen(event, callback, removePrevious, options)
         {
             try
@@ -858,7 +886,7 @@
             }
         }
     }
-    class Validate extends Listeners
+    class Validate extends SpeedyEvents
     {
         isEmail(email)
         {
@@ -1084,55 +1112,13 @@
             document.body.appendChild(script);
         }
     }
-    class SpeedyToggle extends SpeedyCommunicate
-    {
-        show()
-        {
-            for(let node of this._elements(arguments[0]))
-            {
-                this._doShow(node);
-            }
-        }
-        hide()
-        {
-            for(let node of this._elements(arguments[0]))
-            {
-                this._doHide(node);
-            }
-        }
-        toggle()
-        {
-            for(let node of this._elements(arguments[0]))
-            {
-                this._doToggle(node);
-            }
-        }
-        fadeIn()
-        {
-            for(let node of this._elements(arguments[0]))
-            {
-                this._doFadeIn(node);
-            }
-        }
-        fadeOut()
-        {
-            for(let node of this._elements(arguments[0]))
-            {
-                this._doFadeOut(node);
-            }
-        }
-        toggleFade()
-        {
-            for(let node of this._elements(arguments[0]))
-            {
-                this._doFadeToggle(node);
-            }
-        }
-    }
-    class Speedy extends SpeedyToggle
+    class SpeedyDOM extends SpeedyCommunicate
     {
 
     }
-    window.SpeedyBase = SpeedyBase;
+    class Speedy extends speedyDOM
+    {
+
+    }
     window._  = new Speedy();
 })();
