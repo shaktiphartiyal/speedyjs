@@ -87,6 +87,16 @@
                     (typeof obj.ownerDocument ==="object");
             }
         }
+        guid()
+        {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                    .toString(16)
+                    .substring(1);
+            }
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                s4() + '-' + s4() + s4() + s4();
+        }
     }
     class SpeedyHelpers extends SpeedyBase
     {
@@ -1122,10 +1132,23 @@
         constructor(parent)
         {
             this.Speedy = parent;
+            this.idName = [];
+            this.className = [];
         }
         create(rows, cols, dataObj)
         {
             let table = document.createElement('table');
+            let id = Speedy.guid();
+            this.idName.push(id);
+            table.setAttribute('id', id);
+            for(let i = 0; i < rows; i++)
+            {
+                let tr = table.createElement('tr');
+                for(let j=0; j < cols; j++)
+                {
+
+                }
+            }
         }
     }
 
@@ -1134,6 +1157,10 @@
     {
         get table()
         {
+            if(this.table)
+            {
+                return this.table;
+            }
             return new Table(this);
         }
     }
