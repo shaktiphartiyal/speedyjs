@@ -270,6 +270,24 @@
                     <button class="btn btn-primary btn-sm" onClick="_.css(this,{'background-color': '#'+((1<<24)*Math.random()|0).toString(16)});">Apply CSS</button>
                 </div>
             </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span>Add bootstrap danger class to button</span>
+                    <button class="btn btn-primary btn-sm" onClick="_.addClass(this,'btn-danger');">Add class</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span>Remove bootstrap danger class to button</span>
+                    <button class="btn btn-primary btn-danger btn-sm" onClick="_.removeClass(this,'btn-danger');">Remove class</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span>Check if button has the bootstrap <strong>btn</strong> class.</span>
+                    <button class="btn btn-primary btn-sm" onClick="alert(_.hasClass(this,'btn'));">Check class</button>
+                </div>
+            </div>
         </div>
     </div>
 <div class="container">
@@ -323,6 +341,132 @@
                     <span id="span27">This is the span and <span id="span28">this is the child</span>. <span id="span29">this is the 2nd child</span></span>
                     <br/>
                     <button class="btn-primary btn-sm btn" onClick="highlightChildren();">Highlight Children</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span id="span30">The parent of the button will be highlighted.</span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="highlightParent(this);">Highlight my  parent</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span id="span31">A sibling</span> |
+                    <span id="span32">The Element</span> |
+                    <span id="span33">Another Sibling</span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="highlightSiblings();">Highlight element siblings</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span id="span34">A sibling</span> |
+                    <span id="span35">The Element</span> |
+                    <span id="span36">Another Sibling</span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="_.css(_.next('#span35')[0], {'background-color' : '#8eacf1'});">Highlight Next</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span id="span37">A sibling</span> |
+                    <span id="span38">The Element</span> |
+                    <span id="span39">Another Sibling</span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="_.css(_.previous('#span38')[0], {'background-color' : '#8eacf1'});">Highlight Previous</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="card">
+                    <span id="span40">An element with also has <p>some data in paragraph</p> which is real good !</span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="findNHighlight();">Find &lt;p&gt; and highlight</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span id="span40a">This is the sample <p>Para which contains several <span id="span40b">spans and some <span id="span40c">sub spans</span></span></p></span>
+                    <span>Click the button to highlight the closest &lt;p&gt; of #span40c .</span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="_.css(_.closest('#span40c', 'p'),{'background-color' : '#8eacf1'});">Get closest</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span>
+                        <ul id="ulist1">
+                            <li>Car</li>
+                            <li>Cycle</li>
+                            <li>Truck</li>
+                        </ul>
+                    </span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="_.css(_.first('#ulist1 li'),{'background-color' : '#8eacf1'});">Highlight first item</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span>
+                        <ul id="ulist2">
+                            <li>Car</li>
+                            <li>Cycle</li>
+                            <li>Truck</li>
+                        </ul>
+                    </span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="_.css(_.last('#ulist2 li'),{'background-color' : '#8eacf1'});">Highlight last item</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span>
+                        <ul id="ulist3">
+                            <li>Car</li>
+                            <li>Cycle</li>
+                            <li>Truck</li>
+                        </ul>
+                    </span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="_.css(_.nth('#ulist3 li', 2),{'background-color' : '#8eacf1'});">Highlight 2<sup>nd</sup> item</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <h2>Properties</h2>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="card">
+                    <span>Click the button to get the onClick attribute of the button</span><br/>
+                    Result : <span id="span41"></span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="_.html('#span41', _.attr(this,'onclick'));">Get onClick Attribute</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span>Click the button to set the onClick attribute of the button and then click again to test it.</span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="_.attr(this,'onclick','alert(\'Hello there\');');">Set onClick Attribute</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span>Click the button to get the data attribute of the button</span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" data-name="John Doe" onClick="alert(_.data(this,'name'));">Get data-name</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span>Click the button to set the data attribute of the button and you can inspect and check the button.</span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="_.data(this,'age', '18');">Set data-age</button>
                 </div>
             </div>
         </div>
@@ -411,6 +555,23 @@
         {
             _.css(child, {"background-color" : "#8eacf1"});
         }
+    }
+    function highlightParent(elem)
+    {
+        var parent = _.parent(elem);
+        _.css(parent, {"background-color" : "#8eacf1"});
+    }
+
+    function highlightSiblings()
+    {
+        var siblings = _.siblings('#span32');
+        for(let sibling of siblings)
+        {
+            _.css(sibling, {"background-color" : "#8eacf1"});
+        }
+    }
+    function findNHighlight() {
+        _.css(_.find('#span40', 'p')[0], {"background-color" : "#8eacf1"});
     }
 </script>
 </html>

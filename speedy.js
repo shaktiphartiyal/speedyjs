@@ -26,6 +26,19 @@
             }
             return document.querySelectorAll(selector);
         }
+        _element(selector)
+        {
+            this.node = "";
+            this.caller = "";
+            this.nodes = "";
+            if(selector instanceof HTMLElement)
+            {
+                let selected = [];
+                selected.push(selector);
+                return selected;
+            }
+            return document.querySelector(selector);
+        }
         elements(selector)
         {
             this.node = "";
@@ -300,49 +313,88 @@
             }
             return children;
         }
-        parent()
+        parent(selector)
         {
-
+            let elem = this._elements(selector)[0];
+            return elem.parentNode;
         }
-        sibling()
+        siblings(selector)
         {
-
+            let siblings = [];
+            for(let node of this._elements(selector))
+            {
+                siblings.push(node.previousElementSibling);
+                siblings.push(node.nextElementSibling);
+            }
+            return siblings;
         }
-        next()
+        next(selector)
         {
-
+            let next = [];
+            for(let node of this._elements(selector))
+            {
+                next.push(node.nextElementSibling);
+            }
+            return next;
         }
-        previous()
+        previous(selector)
         {
-
+            let prev = [];
+            for(let node of this._elements(selector))
+            {
+                prev.push(node.previousElementSibling);
+            }
+            return prev;
         }
-        find()
+        find(selector, what)
         {
-
+            let elem = [];
+            for(let node of this._elements(selector))
+            {
+                elem = node.querySelectorAll(what);
+            }
+            return elem;
         }
-        closest()
+        closest(selector, theElement)
         {
-
+            let node = this._elements(selector)[0];
+                var matchesFn;
+                ['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector','oMatchesSelector'].some(function(fn) {
+                    if (typeof document.body[fn] == 'function') {
+                        matchesFn = fn;
+                        return true;
+                    }
+                    return false;
+                });
+                var parent;
+                while (node)
+                {
+                    parent = node.parentElement;
+                    if (parent && parent[matchesFn](theElement))
+                    {
+                        return parent;
+                    }
+                    node = parent;
+                }
+                return undefined;
         }
-        each()
+        first(selector)
         {
-
+            return this._elements(selector)[0];
         }
-        equate()
+        nth(selector, n)
         {
-
+            let elements = this._elements(selector);
+            if(n > elements.length)
+            {
+                return undefined;
+            }
+            return elements[n-1];
         }
-        filter()
+        last(selector)
         {
-
-        }
-        first()
-        {
-
-        }
-        last()
-        {
-
+            let elements = this._elements(selector);
+            return elements[elements.length-1];
         }
         has()
         {
@@ -356,7 +408,7 @@
         {
 
         }
-    }
+        }
     class SpeedyManipulate extends SpeedySelectors
     {
         html()
@@ -515,10 +567,68 @@
                 }
             }
         }
+        addClass(selector, className)
+        {
+            for(let node of this._elements(selector))
+            {
+                if (node.classList)
+                {
+                    node.classList.add(className);
+                }
+                else
+                {
+                    node.className += ' ' + className;
+                }
+            }
+        }
+        removeClass(selector, className)
+        {
+            for(let node of this._elements(selector))
+            {
+                if (node.classList)
+                {
+                    node.classList.remove(className);
+                }
+                else
+                {
+                    node.className = node.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+                }
+            }
+        }
+        hasClass(selector, className)
+        {
+            let element = this._elements(selector)[0];
+            return element.className && new RegExp("(^|\\s)" + className + "(\\s|$)").test(element.className);
+        }
     }
     class SpeedyProperties extends SpeedyManipulate
     {
-
+        attr(selector, attribute, value)
+        {
+            let node = this._elements(selector)[0];
+            if(value)
+            {
+                node.setAttribute(attribute, value);
+            }
+            else
+            {
+                return node.getAttribute(attribute);
+            }
+        }
+        data(selector, attribute, value)
+        {
+            for(let node of this._elements(selector))
+            {
+                if(value)
+                {
+                    node.setAttribute('data-'+attribute, value);
+                }
+                else
+                {
+                    return node.getAttribute('data-'+attribute);
+                }
+            }
+        }
     }
     class SpeedyEvents extends SpeedyProperties
     {
