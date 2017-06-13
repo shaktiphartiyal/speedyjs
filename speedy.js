@@ -1112,11 +1112,32 @@
             document.body.appendChild(script);
         }
     }
+
+
+    /**
+     * DOM CREATORS
+     */
+    class Table
+    {
+        constructor(parent)
+        {
+            this.Speedy = parent;
+        }
+        create(rows, cols, dataObj)
+        {
+            let table = document.createElement('table');
+        }
+    }
+
+
     class SpeedyDOM extends SpeedyCommunicate
     {
-
+        get table()
+        {
+            return new Table(this);
+        }
     }
-    class Speedy extends speedyDOM
+    class Speedy extends SpeedyDOM
     {
 
     }
