@@ -1138,17 +1138,22 @@
         create(rows, cols, dataObj)
         {
             let table = document.createElement('table');
-            let id = Speedy.guid();
+            let tr = "", td = "";
+            let id = this.Speedy.guid();
             this.idName.push(id);
             table.setAttribute('id', id);
             for(let i = 0; i < rows; i++)
             {
-                let tr = table.createElement('tr');
+                tr= document.createElement('tr');
                 for(let j=0; j < cols; j++)
                 {
-
+                    td= document.createElement('td');
+                    td.innerHTML = this.Speedy.guid();
+                    tr.appendChild(td);
                 }
+                table.appendChild(tr);
             }
+            document.body.appendChild(table);
         }
     }
 
@@ -1157,11 +1162,12 @@
     {
         get table()
         {
-            if(this.table)
+            if(this._table)
             {
-                return this.table;
+                return this._table;
             }
-            return new Table(this);
+            this._table = new Table(this);
+            return this._table;
         }
     }
     class Speedy extends SpeedyDOM
