@@ -396,19 +396,7 @@
             let elements = this._elements(selector);
             return elements[elements.length-1];
         }
-        has()
-        {
-
-        }
-        not()
-        {
-
-        }
-        is()
-        {
-
-        }
-        }
+    }
     class SpeedyManipulate extends SpeedySelectors
     {
         html()
@@ -605,28 +593,52 @@
     {
         attr(selector, attribute, value)
         {
+            let elements = this._elements(selector);
             let node = this._elements(selector)[0];
             if(value)
             {
-                node.setAttribute(attribute, value);
+                for(let node of elements)
+                {
+                    node.setAttribute(attribute, value);
+                }
             }
             else
             {
-                return node.getAttribute(attribute);
+                return elements[0].getAttribute(attribute);
             }
         }
         data(selector, attribute, value)
         {
-            for(let node of this._elements(selector))
+            let elements = this._elements(selector);
+            if(value)
             {
-                if(value)
+                for(let node of elements)
                 {
                     node.setAttribute('data-'+attribute, value);
                 }
-                else
-                {
-                    return node.getAttribute('data-'+attribute);
-                }
+            }
+            else
+            {
+                return elements[0].getAttribute('data-'+attribute);
+            }
+        }
+        checked(selector)
+        {
+            let node = this._elements(selector)[0];
+            return node.checked;
+        }
+        check(selector)
+        {
+            for(let node of this._elements(selector))
+            {
+                node.checked = true;
+            }
+        }
+        unCheck(selector)
+        {
+            for(let node of this._elements(selector))
+            {
+                node.checked = false;
             }
         }
     }

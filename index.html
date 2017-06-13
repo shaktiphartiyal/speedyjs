@@ -469,6 +469,29 @@
                     <button class="btn-primary btn-sm btn" onClick="_.data(this,'age', '18');">Set data-age</button>
                 </div>
             </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span><input type="checkbox" id="chkbox1"></span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="_.check('#chkbox1');">Check the checkbox</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <span><input type="checkbox" id="chkbox2" checked="checked"></span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="_.unCheck('#chkbox2');">Uncheck the checkbox</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="card">
+                    <span><input type="checkbox" id="chkbox3" checked="checked"></span>
+                    <br/>
+                    <button class="btn-primary btn-sm btn" onClick="alert(_.checked('#chkbox3'))">Is it checked ?</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
