@@ -94,8 +94,7 @@
                     .toString(16)
                     .substring(1);
             }
-            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-                s4() + '-' + s4() + s4() + s4();
+            return s4() + s4() + s4() + new Date().getTime();
         }
     }
     class SpeedyHelpers extends SpeedyBase
@@ -1237,6 +1236,8 @@
             }
             let dialogSel = this.Speedy._elements(this.dialogProperties.dialogHolder)[0];
             let mainDialog = document.createElement('div');
+            mainDialog.id = this.Speedy.guid();
+            this.idName.push(mainDialog.id);
             mainDialog.className = this.dialogProperties.dialogClass;
             let dialogOverlay = null;
             if(this.dialogProperties.dialogOverlay === true)
@@ -1248,8 +1249,10 @@
             diaPart.className = 'spx-innerDialogPart';
             let diaHeader = document.createElement('div');
             diaHeader.className = 'spx-dialogHeader';
+            diaHeader.id = 'dia-header-'+mainDialog.id;
             let diaBtnHolder = document.createElement('div');
             diaBtnHolder.className = 'spx-dialog-buttons';
+            diaBtnHolder.id = 'btn-holder-'+mainDialog.id;
             let closeBtn = document.createElement('span');
             closeBtn.className = "spx-dialog-crossBtn spx-dialog-closeBtn";
             closeBtn.innerHTML = '&times;';
@@ -1291,6 +1294,13 @@
             diaPart.style.width = this.dialogProperties.dialogWidth;
             dialogSel.style.display = 'block';
             document.body.appendChild(mainDialog);
+            let titleRemainingWidth =  diaHeader.offsetWidth - diaBtnHolder.offsetWidth;
+            console.info("MAX allowed Width = "+titleRemainingWidth);
+            console.log("Width of title = "+dialogTitle.offsetWidth);
+            dialogTitle.style.width = titleRemainingWidth-20;
+            dialogTitle.style.overflow = "hidden";
+            dialogTitle.style.whiteSpace = 'nowrap';
+            dialogTitle.style.textOverflow = 'ellipsis';
         }
     }
 
