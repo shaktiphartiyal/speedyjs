@@ -287,6 +287,7 @@
             a.search = str.join("&");
             return a.href;
         }
+
     }
     class SpeedySelectors extends SpeedyHelpers
     {
@@ -1122,6 +1123,35 @@
             document.body.appendChild(script);
         }
     }
+    class SpeedyProperties extends SpeedyCommunicate
+    {
+        get windowWidth()
+        {
+            var w = window,
+                d = document,
+                e = d.documentElement,
+                g = d.getElementsByTagName('body')[0],
+                x = w.innerWidth || e.clientWidth || g.clientWidth;
+            return x;
+        }
+        get windowHeight()
+        {
+            var w = window,
+                d = document,
+                e = d.documentElement,
+                g = d.getElementsByTagName('body')[0],
+                y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+            return y;
+        }
+        get screenHeight()
+        {
+            return screen.height;
+        }
+        get screenWidth()
+        {
+            return screen.width;
+        }
+    }
 
 
     /**
@@ -1133,7 +1163,6 @@
         {
             this.Speedy = parent;
             this.idName = [];
-            this.className = [];
             this.tableProperties = {
                 tableHolder : undefined,
                 tableClass : 'speedy-table',
@@ -1185,7 +1214,88 @@
     }
 
 
-    class SpeedyDOM extends SpeedyCommunicate
+    class Dialog
+    {
+        constructor(parent)
+        {
+            this.Speedy = parent;
+            this.idName = [];
+            this.dialogProperties = {
+                dialogHolder : undefined,
+                dialogClass : 'speedy-dialog',
+                dialogOverlay : true,
+                dialogTitle : "",
+                dialogWidth : (this.Speedy.windowWidth - 100)+'px',
+                dialogHeight : (this.Speedy.windowHeight - 100)+'px',
+            };
+        }
+        create(dataObj)
+        {
+            for (let key in dataObj)
+            {
+                this.dialogProperties[key] = dataObj[key];
+            }
+            let dialogSel = this.Speedy._elements(this.dialogProperties.dialogHolder)[0];
+            let mainDialog = document.createElement('div');
+            mainDialog.className = this.dialogProperties.dialogClass;
+            let dialogOverlay = null;
+            if(this.dialogProperties.dialogOverlay === true)
+            {
+                dialogOverlay = document.createElement('div');
+                dialogOverlay.className = 'spx-overlayPart';
+            }
+            let diaPart = document.createElement('div');
+            diaPart.className = 'spx-innerDialogPart';
+            let diaHeader = document.createElement('div');
+            diaHeader.className = 'spx-dialogHeader';
+            let diaBtnHolder = document.createElement('div');
+            diaBtnHolder.className = 'spx-dialog-buttons';
+            let closeBtn = document.createElement('span');
+            closeBtn.className = "spx-dialog-crossBtn spx-dialog-closeBtn";
+            closeBtn.innerHTML = '&times;';
+            closeBtn.addEventListener('click', function(){
+                dialogSel.style.display = "none";
+                mainDialog.insertAdjacentHTML('afterend', dialogSel.outerHTML);
+                mainDialog.remove();
+            });
+            diaBtnHolder.appendChild(closeBtn);
+            let maxminBtn = document.createElement('span');
+            maxminBtn.className = "spx-dialog-crossBtn";
+            let maxminBtnDsgn = document.createElement('span');
+            maxminBtnDsgn.className = 'spx-mini';
+            maxminBtn.appendChild(maxminBtnDsgn);
+            diaBtnHolder.appendChild(maxminBtn);
+            let minimizeBtn = document.createElement('span');
+            minimizeBtn.className = "spx-dialog-crossBtn";
+            minimizeBtn.innerHTML = '&minus;';
+            diaBtnHolder.appendChild(minimizeBtn);
+            diaHeader.appendChild(diaBtnHolder);
+            let dialogTitle = document.createElement('span');
+            dialogTitle.innerHTML = this.dialogProperties.dialogTitle;
+            diaHeader.appendChild(dialogTitle);
+            diaPart.appendChild(diaHeader);
+            let dialogContent = document.createElement('div');
+            dialogContent.className = 'spx-contentPart';
+            dialogContent.appendChild(dialogSel);
+            diaPart.appendChild(dialogContent);
+            if(this.dialogProperties.dialogOverlay === true)
+            {
+                dialogOverlay.appendChild(diaPart);
+                mainDialog.appendChild(dialogOverlay);
+            }
+            else
+            {
+                mainDialog.appendChild(diaPart);
+            }
+            diaPart.style.height = this.dialogProperties.dialogHeight;
+            diaPart.style.width = this.dialogProperties.dialogWidth;
+            dialogSel.style.display = 'block';
+            document.body.appendChild(mainDialog);
+        }
+    }
+
+
+    class SpeedyDOM extends SpeedyProperties
     {
         get table()
         {
@@ -1195,6 +1305,15 @@
             }
             this._table = new Table(this);
             return this._table;
+        }
+        get dialog()
+        {
+            if(this._dialog)
+            {
+                return this._dialog;
+            }
+            this._dialog = new Dialog(this);
+            return this._dialog;
         }
     }
     class Speedy extends SpeedyDOM
