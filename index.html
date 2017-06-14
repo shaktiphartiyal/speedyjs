@@ -499,8 +499,16 @@
 
     <div class="container">
         <h2>DOM Creators</h2>
-        <div class="row" id="tableHolder1">
-
+        <div class="row">
+            <div class="col-md-2">
+                <div class="card">
+                    <button class="btn-primary btn-sm btn" onClick="createTable();">Create Table</button>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="card" id="tableHolder1">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -609,23 +617,23 @@
         _.css(_.find('#span40', 'p')[0], {"background-color" : "#8eacf1"});
     }
 
-
-
-    _.table.create({
-        options : {
-            tableHolder : '#tableHolder1',
-            tableClass : 'speedy-table',
-            tableWidth : "50%"
-        },
-        headers : ['Name', 'Age', 'Gender'],
-        data : [
+    function createTable() {
+        _.table.create({
+            options : {
+                tableHolder : '#tableHolder1',
+                tableClass : 'speedy-table',
+                tableWidth : "50%"
+            },
+            headers : ['Name', 'Age', 'Gender'],
+            data : [
                 ["Raj", 26, "Male"],
                 ["Raja", 27, "Male"],
                 ["Simran", 25, "Female"],
                 ["Rohit", 24, "Male"],
                 ["Zoya", 25, "Female"]
-        ]
-    });
+            ]
+        });
+    }
 
 
 </script>

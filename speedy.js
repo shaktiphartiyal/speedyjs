@@ -1135,6 +1135,7 @@
             this.idName = [];
             this.className = [];
             this.tableProperties = {
+                tableHolder : undefined,
                 tableClass : 'speedy-table',
                 tableWidth : "100%",
             };
