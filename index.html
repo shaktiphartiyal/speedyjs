@@ -502,7 +502,7 @@
         <div class="row">
             <div class="col-md-2">
                 <div class="card">
-                    <button class="btn-primary btn-sm btn" onClick="createTable();">Create Table</button>
+                    <button class="btn-primary btn-sm btn" onClick="createTable(this);">Create Table</button>
                 </div>
             </div>
             <div class="col-md-10">
@@ -617,7 +617,8 @@
         _.css(_.find('#span40', 'p')[0], {"background-color" : "#8eacf1"});
     }
 
-    function createTable() {
+    function createTable(elem) {
+        _.disable(elem);
         _.table.create({
             options : {
                 tableHolder : '#tableHolder1',
