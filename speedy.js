@@ -1224,6 +1224,7 @@
                 dialogClass : 'speedy-dialog',
                 dialogOverlay : true,
                 dialogTitle : "",
+                hideScrollBar : false,
                 dialogWidth : (this.Speedy.windowWidth - 100)+'px',
                 dialogHeight : (this.Speedy.windowHeight - 100)+'px',
             };
@@ -1234,7 +1235,13 @@
             {
                 this.dialogProperties[key] = dataObj[key];
             }
+            let theProps = this.dialogProperties;
             let dialogSel = this.Speedy._elements(this.dialogProperties.dialogHolder)[0];
+            if(dialogSel.getAttribute('dialog') == "true")
+            {
+                return;
+            }
+            dialogSel.setAttribute('dialog', true);
             let mainDialog = document.createElement('div');
             mainDialog.id = this.Speedy.guid();
             this.idName.push(mainDialog.id);
@@ -1260,6 +1267,12 @@
                 dialogSel.style.display = "none";
                 mainDialog.insertAdjacentHTML('afterend', dialogSel.outerHTML);
                 mainDialog.remove();
+                let theElem = _._elements(_.dialog.dialogProperties.dialogHolder)[0];
+                theElem.removeAttribute('dialog');
+                if(theProps.hideScrollBar === true)
+                {
+                    document.documentElement.style.overflow = 'auto';
+                }
             });
             diaBtnHolder.appendChild(closeBtn);
             let maxminBtn = document.createElement('span');
@@ -1295,12 +1308,14 @@
             dialogSel.style.display = 'block';
             document.body.appendChild(mainDialog);
             let titleRemainingWidth =  diaHeader.offsetWidth - diaBtnHolder.offsetWidth;
-            console.info("MAX allowed Width = "+titleRemainingWidth);
-            console.log("Width of title = "+dialogTitle.offsetWidth);
             dialogTitle.style.width = titleRemainingWidth-20;
             dialogTitle.style.overflow = "hidden";
             dialogTitle.style.whiteSpace = 'nowrap';
             dialogTitle.style.textOverflow = 'ellipsis';
+            if(this.dialogProperties.hideScrollBar === true)
+            {
+                document.documentElement.style.overflow = 'hidden';
+            }
         }
     }
 
