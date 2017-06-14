@@ -286,7 +286,38 @@
             a.search = str.join("&");
             return a.href;
         }
-
+        _fullscreen(elementId,option)
+        {
+            if (!option)
+            {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+            else
+            {
+                let element = document.getElementById(elementId);
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if (element.webkitRequestFullscreen) {
+                    element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                } else if (element.msRequestFullscreen) {
+                    element.msRequestFullscreen();
+                }
+            }
+        }
+        _isFullScreen()
+        {
+            return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+        }
     }
     class SpeedySelectors extends SpeedyHelpers
     {
@@ -1254,6 +1285,7 @@
             }
             let diaPart = document.createElement('div');
             diaPart.className = 'spx-innerDialogPart';
+            diaPart.id = 'spx-innerDialogPart-'+mainDialog.id;
             let diaHeader = document.createElement('div');
             diaHeader.className = 'spx-dialogHeader';
             diaHeader.id = 'dia-header-'+mainDialog.id;
@@ -1281,6 +1313,20 @@
             maxminBtnDsgn.className = 'spx-mini';
             maxminBtn.appendChild(maxminBtnDsgn);
             diaBtnHolder.appendChild(maxminBtn);
+            maxminBtn.addEventListener('click', function(){
+                if(!_._isFullScreen())
+                {
+                    _._fullscreen(diaPart.id, true);
+                    diaPart.style.height = "100%";
+                    diaPart.style.width = "100%";
+                }
+                else
+                {
+                    _._fullscreen(false);
+                    diaPart.style.height = theProps.dialogHeight;
+                    diaPart.style.width = theProps.dialogWidth;
+                }
+            });
             let minimizeBtn = document.createElement('span');
             minimizeBtn.className = "spx-dialog-crossBtn";
             minimizeBtn.innerHTML = '&minus;';
