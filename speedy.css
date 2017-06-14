@@ -1,0 +1,43 @@
+table.speedy-table {
+    max-width:100%;
+    width: 100%;
+    font-size: 13px;
+    table-layout: fixed;
+}
+table.speedy-table thead {
+    padding: 3px;
+    background: #D1DEEF;
+    background: -webkit-linear-gradient(180deg, #D6E3F4 40%, #BED2EF 50%);
+    background: -moz-linear-gradient(180deg, #D6E3F4 40%, #BED2EF 50%);
+    background: linear-gradient(180deg, #D6E3F4 40%, #BED2EF 50%);
+}
+table.speedy-table thead tr th {
+    text-align: left;
+    padding: 3px;
+    border-left: 1px solid #ddd;
+}
+table.speedy-table thead tr {
+    border:1px solid #ddd;
+    position: sticky;
+    position: -webkit-sticky;
+}
+table.speedy-table thead tr th:first-of-type {
+    border-left: 1px solid transparent;
+}
+table.speedy-table tbody tr td {
+    padding: 3px;
+}
+table.speedy-table tbody tr td {
+    border: 1px solid #ddd;
+}
+table.speedy-table tbody tr {
+    border-top:1px solid #000;
+    border-bottom: 1px solid #000;
+    cursor: pointer;
+}
+table.speedy-table tbody tr:hover {
+    background: #D1DEEF;
+    background: -webkit-linear-gradient(180deg, #D6E3F4 40%, #BED2EF 50%);
+    background: -moz-linear-gradient(180deg, #D6E3F4 40%, #BED2EF 50%);
+    background: linear-gradient(180deg, #D6E3F4 40%, #BED2EF 50%);
+}

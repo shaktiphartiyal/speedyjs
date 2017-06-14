@@ -2,6 +2,7 @@
 <head>
     <title>Speedy JS</title>
     <link href="bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="speedy.css" rel="stylesheet" type="text/css"/>
     <script src="speedy.js" type="text/javascript"></script>
     <style>
         .card {
@@ -494,7 +495,18 @@
             </div>
         </div>
     </div>
+
+
+    <div class="container">
+        <h2>DOM Creators</h2>
+        <div class="row" id="tableHolder1">
+
+        </div>
+    </div>
+
 </div>
+
+
 </body>
 <script type="text/javascript">
     _.domLoaded(function () {
@@ -596,6 +608,25 @@
     function findNHighlight() {
         _.css(_.find('#span40', 'p')[0], {"background-color" : "#8eacf1"});
     }
-    _.child('#sp')
+
+
+
+    _.table.create({
+        options : {
+            tableHolder : '#tableHolder1',
+            tableClass : 'speedy-table',
+            tableWidth : "50%"
+        },
+        headers : ['Name', 'Age', 'Gender'],
+        data : [
+                ["Raj", 26, "Male"],
+                ["Raja", 27, "Male"],
+                ["Simran", 25, "Female"],
+                ["Rohit", 24, "Male"],
+                ["Zoya", 25, "Female"]
+        ]
+    });
+
+
 </script>
 </html>

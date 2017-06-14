@@ -1134,26 +1134,52 @@
             this.Speedy = parent;
             this.idName = [];
             this.className = [];
+            this.tableProperties = {
+                tableClass : 'speedy-table',
+                tableWidth : "100%",
+            };
         }
-        create(rows, cols, dataObj)
+        create(dataObj)
         {
             let table = document.createElement('table');
-            let tr = "", td = "";
-            let id = this.Speedy.guid();
-            this.idName.push(id);
-            table.setAttribute('id', id);
-            for(let i = 0; i < rows; i++)
+            let thead, tbody, th, tr, td, i, j;
+            table.id = this.Speedy.guid();
+            this.idName.push(table.id);
+            thead = document.createElement('thead');
+            tr = document.createElement('tr');
+            for (i = 0; i < dataObj.headers.length; i++)
             {
-                tr= document.createElement('tr');
-                for(let j=0; j < cols; j++)
+                th = document.createElement('th');
+                th.innerHTML = dataObj.headers[i];
+                tr.appendChild(th);
+            }
+            thead.appendChild(tr);
+            table.appendChild(thead);
+            thead=tr=th=i="";
+            tbody = document.createElement('tbody');
+            for (i = 0; i < dataObj.data.length; i++)
+            {
+                tr = document.createElement('tr');
+                for(j = 0; j < dataObj.data[i].length; j++)
                 {
-                    td= document.createElement('td');
-                    td.innerHTML = this.Speedy.guid();
+                    td = document.createElement('td');
+                    td.innerHTML = dataObj.data[i][j];
                     tr.appendChild(td);
                 }
-                table.appendChild(tr);
+                tbody.appendChild(tr);
             }
-            document.body.appendChild(table);
+            table.appendChild(tbody);
+            for (let key in dataObj.options)
+            {
+                this.tableProperties[key] = dataObj.options[key];
+            }
+
+            table.className = this.tableProperties.tableClass;
+            table.style.width = this.tableProperties.tableWidth;
+            document.querySelector(this.tableProperties.tableHolder).appendChild(table);
+
+            table=thead=tbody=tr=td="";
+            return table.id;
         }
     }
 
