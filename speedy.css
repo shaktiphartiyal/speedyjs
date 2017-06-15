@@ -114,3 +114,18 @@ table.speedy-table tbody tr:hover {
     overflow: auto;
 }
 /* ~~~~~~~~~~~~~~~~~~~~~~END SPEEDY DIALOG~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~START UTILS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.spx-resizer
+{
+    width: 10px;
+    height: 10px;
+    background: #9d9d9d;
+    position:absolute;
+    right: 0;
+    bottom: 0;
+    cursor: se-resize;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAACVBMVEX////q6uokIiS23aNWAAAAMUlEQVQI12PABAlAzDgBSLA5AAlJkFBKAlBoIlCMzc0BKCQJEkpJAAoBxZicnBwQmgHo6AeWEYfYHAAAAABJRU5ErkJggg==') bottom right no-repeat;
+}
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END UTILS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
