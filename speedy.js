@@ -1321,12 +1321,14 @@
                     _._fullscreen(diaPart.id, true);
                     diaPart.style.height = "100%";
                     diaPart.style.width = "100%";
+                    manageTitle();
                 }
                 else
                 {
                     _._fullscreen(false);
                     diaPart.style.height = theProps.dialogHeight;
                     diaPart.style.width = theProps.dialogWidth;
+                    manageTitle();
                 }
             });
             let minimizeBtn = document.createElement('span');
@@ -1347,18 +1349,21 @@
             diaPart.style.width = this.dialogProperties.dialogWidth;
             dialogSel.style.display = 'block';
             document.body.appendChild(mainDialog);
-            let titleRemainingWidth =  diaHeader.offsetWidth - diaBtnHolder.offsetWidth;
-            dialogTitle.style.width = titleRemainingWidth-20;
-            dialogTitle.style.overflow = "hidden";
-            dialogTitle.style.whiteSpace = 'nowrap';
-            dialogTitle.style.textOverflow = 'ellipsis';
+            function manageTitle() {
+                let titleRemainingWidth =  diaHeader.offsetWidth - diaBtnHolder.offsetWidth;
+                dialogTitle.style.width = titleRemainingWidth-20;
+                dialogTitle.style.overflow = "hidden";
+                dialogTitle.style.whiteSpace = 'nowrap';
+                dialogTitle.style.textOverflow = 'ellipsis';
+            }
+            manageTitle();
             if(this.dialogProperties.hideScrollBar === true)
             {
                 document.documentElement.style.overflow = 'hidden';
             }
             if(this.dialogProperties.dialogResizable === true)
             {
-                this.Speedy.resizable.makeResizable('#'+diaPart.id);
+                this.Speedy.resizable.makeResizable('#'+diaPart.id, manageTitle, manageTitle, manageTitle);
             }
         }
     }
@@ -1370,7 +1375,7 @@
         {
 
         }
-        makeResizable(selector)
+        makeResizable(selector, startResizeCallback, doResizeCallback, stopResizeCallback)
         {
             let p = document.querySelector(selector);
             p.className = p.className + ' spx-resizable';
@@ -1387,17 +1392,41 @@
                 startHeight = parseInt(document.defaultView.getComputedStyle(p).height, 10);
                 document.documentElement.addEventListener('mousemove', doDrag, false);
                 document.documentElement.addEventListener('mouseup', stopDrag, false);
+                if(typeof(startResizeCallback) == "function")
+                {
+                    startResizeCallback();
+                }
             }
 
             function doDrag(e) {
                 p.style.userSelect = "none";
                 p.style.width = (startWidth + e.clientX - startX) + 'px';
                 p.style.height = (startHeight + e.clientY - startY) + 'px';
+                if(typeof(doResizeCallback) == "function")
+                {
+                    doResizeCallback();
+                }
             }
             function stopDrag(e) {
                 p.style.userSelect = "auto";
                 document.documentElement.removeEventListener('mousemove', doDrag, false);    document.documentElement.removeEventListener('mouseup', stopDrag, false);
+                if(typeof(stopResizeCallback) == "function")
+                {
+                    stopResizeCallback();
+                }
             }
+        }
+    }
+
+    class Draggable
+    {
+        constructor(spx)
+        {
+
+        }
+        makeDraggable(selector)
+        {
+
         }
     }
 
@@ -1425,6 +1454,10 @@
         get resizable()
         {
             return new Resizable(this);
+        }
+        get draggable()
+        {
+            return new Draggable(this);
         }
     }
     class Speedy extends SpeedyDOM
