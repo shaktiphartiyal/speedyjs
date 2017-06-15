@@ -1282,6 +1282,7 @@
             {
                 dialogOverlay = document.createElement('div');
                 dialogOverlay.className = 'spx-overlayPart';
+                mainDialog.appendChild(dialogOverlay);
             }
             let diaPart = document.createElement('div');
             diaPart.className = 'spx-innerDialogPart';
@@ -1340,15 +1341,7 @@
             dialogContent.className = 'spx-contentPart';
             dialogContent.appendChild(dialogSel);
             diaPart.appendChild(dialogContent);
-            if(this.dialogProperties.dialogOverlay === true)
-            {
-                dialogOverlay.appendChild(diaPart);
-                mainDialog.appendChild(dialogOverlay);
-            }
-            else
-            {
-                mainDialog.appendChild(diaPart);
-            }
+            mainDialog.appendChild(diaPart);
             diaPart.style.height = this.dialogProperties.dialogHeight;
             diaPart.style.width = this.dialogProperties.dialogWidth;
             dialogSel.style.display = 'block';
