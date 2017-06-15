@@ -286,7 +286,7 @@
             a.search = str.join("&");
             return a.href;
         }
-        _fullscreen(elementId,option)
+        _fullscreen(elementId,option,callback)
         {
             if (!option)
             {
@@ -313,10 +313,40 @@
                     element.msRequestFullscreen();
                 }
             }
+            if(typeof(callback) == "function")
+            {
+                callback();
+            }
         }
         _isFullScreen()
         {
             return document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+        }
+        _centerMe(node)
+        {
+            var w = window;
+            node.style.top = (w.innerHeight/2) - (node.offsetHeight/2) + 'px';
+            node.style.left = (w.innerWidth/2) - (node.offsetWidth/2) + 'px';
+        }
+        _getOffset( node )
+        {
+            var _x = 0;
+            var _y = 0;
+            while( node && !isNaN( node.offsetLeft ) && !isNaN( node.offsetTop ) ) {
+                _x += node.offsetLeft - node.scrollLeft;
+                _y += node.offsetTop - node.scrollTop;
+                node = node.offsetParent;
+            }
+            return { top: _y, left: _x };
+        }
+        _isElementInViewport (node) {
+            var rect = node.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
         }
     }
     class SpeedySelectors extends SpeedyHelpers
@@ -1259,6 +1289,7 @@
                 dialogWidth : (this.Speedy.windowWidth - 100)+'px',
                 dialogHeight : (this.Speedy.windowHeight - 100)+'px',
                 dialogResizable : false,
+                dialogDraggable : false,
             };
         }
         create(dataObj)
@@ -1297,17 +1328,6 @@
             let closeBtn = document.createElement('span');
             closeBtn.className = "spx-dialog-crossBtn spx-dialog-closeBtn";
             closeBtn.innerHTML = '&times;';
-            closeBtn.addEventListener('click', function(){
-                dialogSel.style.display = "none";
-                mainDialog.insertAdjacentHTML('afterend', dialogSel.outerHTML);
-                mainDialog.remove();
-                let theElem = _._elements(_.dialog.dialogProperties.dialogHolder)[0];
-                theElem.removeAttribute('dialog');
-                if(theProps.hideScrollBar === true)
-                {
-                    document.documentElement.style.overflow = 'auto';
-                }
-            });
             diaBtnHolder.appendChild(closeBtn);
             let maxminBtn = document.createElement('span');
             maxminBtn.className = "spx-dialog-crossBtn";
@@ -1315,22 +1335,6 @@
             maxminBtnDsgn.className = 'spx-mini';
             maxminBtn.appendChild(maxminBtnDsgn);
             diaBtnHolder.appendChild(maxminBtn);
-            maxminBtn.addEventListener('click', function(){
-                if(!_._isFullScreen())
-                {
-                    _._fullscreen(diaPart.id, true);
-                    diaPart.style.height = "100%";
-                    diaPart.style.width = "100%";
-                    manageTitle();
-                }
-                else
-                {
-                    _._fullscreen(false);
-                    diaPart.style.height = theProps.dialogHeight;
-                    diaPart.style.width = theProps.dialogWidth;
-                    manageTitle();
-                }
-            });
             let minimizeBtn = document.createElement('span');
             minimizeBtn.className = "spx-dialog-crossBtn";
             minimizeBtn.innerHTML = '&minus;';
@@ -1357,14 +1361,93 @@
                 dialogTitle.style.textOverflow = 'ellipsis';
             }
             manageTitle();
+            closeBtn.addEventListener('click', function(){
+                dialogSel.style.display = "none";
+                mainDialog.insertAdjacentHTML('afterend', dialogSel.outerHTML);
+                mainDialog.remove();
+                let theElem = _._elements(_.dialog.dialogProperties.dialogHolder)[0];
+                theElem.removeAttribute('dialog');
+                if(theProps.hideScrollBar === true)
+                {
+                    document.documentElement.style.overflow = 'auto';
+                }
+            });
+
+            let diaParams = {
+                xdiaLeft : _._getOffset(diaPart).left,
+                xdiaTop : _._getOffset(diaPart).top,
+            };
+
+            Object.freeze(diaParams);
+
+
             if(this.dialogProperties.hideScrollBar === true)
             {
                 document.documentElement.style.overflow = 'hidden';
             }
             if(this.dialogProperties.dialogResizable === true)
             {
-                this.Speedy.resizable.makeResizable('#'+diaPart.id, manageTitle, manageTitle, manageTitle);
+                this.Speedy.resizable.makeResizable('#'+diaPart.id, manageTitle, manageTitle, manageTitle, {left:diaParams.xdiaLeft, top:diaParams.xdiaTop, height: theProps.dialogHeight, width : theProps.dialogWidth});
             }
+            if(this.dialogProperties.dialogDraggable === true)
+            {
+                diaHeader.style.cursor = "all-scroll";
+                this.Speedy.draggable.makeDraggable('#'+diaHeader.id,'#'+diaPart.id, {left:diaParams.xdiaLeft, top:diaParams.xdiaTop});
+            }
+
+            function fsExitCB(fn)
+            {
+                if (document.addEventListener)
+                {
+                    document.addEventListener('webkitfullscreenchange', exitHandler, false);
+                    document.addEventListener('mozfullscreenchange', exitHandler, false);
+                    document.addEventListener('fullscreenchange', exitHandler, false);
+                    document.addEventListener('MSFullscreenChange', exitHandler, false);
+                }
+
+                function exitHandler()
+                {
+                    if (document.webkitIsFullScreen === false)
+                    {
+                        fn();
+                    }
+                    else if (document.mozFullScreen === false)
+                    {
+                        fn();
+                    }
+                    else if (document.msFullscreenElement === false)
+                    {
+                        fn();
+                    }
+                }
+            }
+
+            fsExitCB(function () {
+                diaPart.style.height = theProps.dialogHeight;
+                diaPart.style.width = theProps.dialogWidth;
+                manageTitle();
+                diaPart.style.top = diaParams.xdiaTop;
+                diaPart.style.left = diaParams.xdiaLeft;
+            });
+
+            maxminBtn.addEventListener('click', function(){
+                if(!_._isFullScreen())
+                {
+                    _._fullscreen(diaPart.id, true);
+                    diaPart.style.height = "100vh";
+                    diaPart.style.width = "100vw";
+                    diaPart.style.top = "50%";
+                    diaPart.style.left = "50%";
+                    manageTitle();
+                }
+                else
+                {
+                    _._fullscreen(false, false);
+                    diaPart.style.height = theProps.dialogHeight;
+                    diaPart.style.width = theProps.dialogWidth;
+                    manageTitle();
+                }
+            });
         }
     }
 
@@ -1375,7 +1458,7 @@
         {
 
         }
-        makeResizable(selector, startResizeCallback, doResizeCallback, stopResizeCallback)
+        makeResizable(selector, startResizeCallback, doResizeCallback, stopResizeCallback, reversalTopLeft)
         {
             let p = document.querySelector(selector);
             p.className = p.className + ' spx-resizable';
@@ -1385,6 +1468,10 @@
             resizer.addEventListener('mousedown', initDrag, false);
             let startX, startY, startWidth, startHeight;
             function initDrag(e) {
+                if(_._isFullScreen())
+                {
+                    return;
+                }
                 p.style.userSelect = "none";
                 startX = e.clientX;
                 startY = e.clientY;
@@ -1410,6 +1497,17 @@
             function stopDrag(e) {
                 p.style.userSelect = "auto";
                 document.documentElement.removeEventListener('mousemove', doDrag, false);    document.documentElement.removeEventListener('mouseup', stopDrag, false);
+
+                if(!_._isElementInViewport(theDragger) || !_._isElementInViewport(toBeDragged))
+                {
+                    if(reversalTopLeft)
+                    {
+                        p.style.top = reversalTopLeft.top;
+                        p.style.left = reversalTopLeft.left;
+                        p.style.height = reversalTopLeft.height;
+                        p.style.width = reversalTopLeft.width;
+                    }
+                }
                 if(typeof(stopResizeCallback) == "function")
                 {
                     stopResizeCallback();
@@ -1424,9 +1522,52 @@
         {
 
         }
-        makeDraggable(selector)
+        makeDraggable(dragger, draggable, reversalTopLeft)
         {
+            var mousePosition;
+            var offset = [0,0];
+            var toBeDragged;
+            var theDragger;
+            var isDown = false;
+            theDragger = document.querySelector(dragger);
+            toBeDragged = document.querySelector(draggable);
+            theDragger.addEventListener('mousedown', function(e) {
+                if(_._isFullScreen())
+                {
+                    return;
+                }
+                isDown = true;
+                offset = [
+                    toBeDragged.offsetLeft - e.clientX,
+                    toBeDragged.offsetTop - e.clientY
+                ];
+            }, true);
 
+            document.addEventListener('mouseup', function() {
+                isDown = false;
+                if(!_._isElementInViewport(theDragger) || !_._isElementInViewport(toBeDragged))
+                {
+                    if(reversalTopLeft)
+                    {
+                        toBeDragged.style.top = reversalTopLeft.top;
+                        toBeDragged.style.left = reversalTopLeft.left;
+                    }
+                }
+            }, true);
+
+            document.addEventListener('mousemove', function(event) {
+                event.preventDefault();
+                if (isDown) {
+                    mousePosition = {
+
+                        x : event.clientX,
+                        y : event.clientY
+
+                    };
+                    toBeDragged.style.left = (mousePosition.x + offset[0]) + 'px';
+                    toBeDragged.style.top  = (mousePosition.y + offset[1]) + 'px';
+                }
+            }, true);
         }
     }
 
