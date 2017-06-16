@@ -1448,6 +1448,17 @@
                     manageTitle();
                 }
             });
+            let minimized = false;
+            minimizeBtn.addEventListener('click', function () {
+                if(minimized === true)
+                {
+
+                }
+                else
+                {
+                    //@TODO
+                }
+            });
         }
     }
 
@@ -1532,6 +1543,10 @@
             theDragger = document.querySelector(dragger);
             toBeDragged = document.querySelector(draggable);
             theDragger.addEventListener('mousedown', function(e) {
+                if(e.which != 1)
+                {
+                    return;
+                }
                 if(_._isFullScreen())
                 {
                     return;
